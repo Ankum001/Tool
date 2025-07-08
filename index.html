@@ -1,0 +1,2311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Inspiration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            padding-top: 70px;
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 40%;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #2c3e50;
+            cursor: pointer;
+        }
+        
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1001;
+        }
+        
+        .search-suggestions.show {
+            display: block;
+        }
+        
+        .suggestion-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+        }
+        
+        /* Profile Avatar */
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-avatar-text {
+            font-weight: bold;
+            color: white;
+        }
+        
+        /* Hamburger Menu */
+        .hamburger-menu {
+            position: relative;
+        }
+        
+        .menu-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            width: 250px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1001;
+        }
+        
+        .menu-dropdown.show {
+            display: block;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            color: #333;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .menu-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .submenu {
+            display: none;
+            padding-left: 15px;
+            background-color: #f9f9f9;
+        }
+        
+        .submenu.show {
+            display: block;
+        }
+        
+        /* Profile Dropdown */
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            width: 300px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1001;
+            padding: 20px;
+        }
+        
+        .profile-dropdown.show {
+            display: block;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .profile-avatar-lg {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            overflow: hidden;
+        }
+        
+        .profile-avatar-lg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .username {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .user-email {
+            color: #666;
+            font-size: 14px;
+            word-break: break-all;
+        }
+        
+        .dropdown-menu {
+            list-style: none;
+        }
+        
+        .dropdown-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .dropdown-item:hover {
+            color: #2c3e50;
+        }
+        
+        .dropdown-item:hover i {
+            color: #2c3e50;
+        }
+        
+        .logout-btn {
+            color: #e74c3c;
+        }
+        
+        .logout-btn i {
+            color: #e74c3c;
+        }
+        
+        /* Settings Modal */
+        .settings-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .settings-modal.show {
+            display: flex;
+        }
+        
+        .settings-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .close-settings {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .settings-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .settings-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #777;
+        }
+        
+        .settings-tab.active {
+            color: #2c3e50;
+            border-bottom: 2px solid #2c3e50;
+        }
+        
+        .settings-content {
+            display: none;
+        }
+        
+        .settings-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input, 
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .avatar-upload {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #eee;
+            margin-right: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .avatar-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .upload-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .upload-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #2ecc71;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .delete-account {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Homepage Content */
+        .homepage {
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .prompts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .prompt-card {
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .prompt-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .prompt-content {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .prompt-text-container {
+            flex: 1;
+        }
+        
+        .prompt-text {
+            font-size: 10px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .prompt-image-container {
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0;
+        }
+        
+        .prompt-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .prompt-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .view-count {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .prompt-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            flex: 1;
+            justify-content: center;
+            transition: opacity 0.3s;
+        }
+        
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .copy-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .star-btn {
+            background-color: #f1c40f;
+            color: #333;
+        }
+        
+        .more-images-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        /* About Us Page */
+        .about-page {
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .about-page h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .about-page h2 {
+            color: #3498db;
+            margin: 20px 0 10px;
+        }
+        
+        .about-page p {
+            margin-bottom: 15px;
+        }
+        
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .team-member {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        
+        /* Help & Feedback Modal */
+        .help-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .help-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .close-help {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .help-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            min-height: 100px;
+        }
+        
+        .submit-help {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        /* Back Button */
+        .back-button {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 999;
+        }
+        
+        .back-button.show {
+            display: block;
+        }
+        
+        /* Image Gallery Modal */
+        .gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gallery-modal.show {
+            display: flex;
+        }
+        
+        .gallery-container {
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .gallery-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 10px;
+        }
+        
+        .gallery-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .gallery-slide {
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            width: 100%;
+            height: 500px;
+            position: relative;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .close-gallery {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 2001;
+        }
+        
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2001;
+            font-size: 20px;
+        }
+        
+        .gallery-prev {
+            left: 20px;
+        }
+        
+        .gallery-next {
+            right: 20px;
+        }
+        
+        /* Login/Signup Modal */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .auth-modal.show {
+            display: flex;
+        }
+        
+        .auth-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .auth-back-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        
+        .auth-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #777;
+        }
+        
+        .auth-tab.active {
+            color: #2c3e50;
+            border-bottom: 2px solid #2c3e50;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin: 10px 0;
+            font-size: 14px;
+            color: #3498db;
+            cursor: pointer;
+        }
+        
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        /* Google AdSense Ad Styles */
+        .ad-container {
+            margin: 20px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .ad-label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        .ad-banner {
+            width: 100%;
+            min-height: 90px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            margin: 0 auto;
+        }
+        
+        .ad-leaderboard {
+            width: 728px;
+            height: 90px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            margin: 0 auto;
+        }
+        
+        .ad-medium-rectangle {
+            width: 300px;
+            height: 250px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            margin: 0 auto;
+        }
+        
+        .ad-large-rectangle {
+            width: 336px;
+            height: 280px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            margin: 0 auto;
+        }
+        
+        .ad-skyscraper {
+            width: 120px;
+            height: 600px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            margin: 0 auto;
+        }
+        
+        .ad-mobile-banner {
+            width: 320px;
+            height: 50px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            margin: 0 auto;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .search-container {
+                width: 60%;
+            }
+            
+            .prompts-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .prompt-content {
+                flex-direction: column;
+            }
+            
+            .prompt-image-container {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .ad-leaderboard {
+                width: 468px;
+                height: 60px;
+            }
+            
+            .ad-medium-rectangle {
+                width: 300px;
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .search-container {
+                width: 70%;
+            }
+            
+            .prompts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .prompt-text {
+                min-height: auto;
+            }
+            
+            .profile-dropdown {
+                width: 280px;
+            }
+            
+            .ad-leaderboard, 
+            .ad-medium-rectangle,
+            .ad-large-rectangle {
+                width: 100%;
+                max-width: 320px;
+                height: 50px;
+            }
+            
+            .ad-skyscraper {
+                width: 100%;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="hamburger-menu">
+                <i class="fas fa-bars nav-icon" id="menu-icon"></i>
+                <div class="menu-dropdown" id="menu-dropdown">
+                    <div class="menu-item" id="starred-item">Starred</div>
+                    <div class="menu-item" id="feature-item">Feature <i class="fas fa-chevron-down"></i></div>
+                    <div class="submenu" id="feature-submenu">
+                        <div class="menu-item">Romantic</div>
+                        <div class="menu-item">Happy</div>
+                        <div class="menu-item">Sad</div>
+                        <div class="menu-item">Nature</div>
+                    </div>
+                    <a href="#" class="menu-item" id="home-item">Home</a>
+                    <a href="#" class="menu-item" id="about-item">About Us</a>
+                    <a href="#" class="menu-item" id="help-item">Help & Feedback</a>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search prompts...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <div class="search-suggestions">
+                    <!-- Suggestions will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-right">
+            <div class="profile-icon">
+                <div class="profile-avatar" id="profile-avatar">
+                    <div class="profile-avatar-text" id="avatar-text">GU</div>
+                    <img src="" alt="Profile" id="avatar-img" style="display: none;">
+                </div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="profile-header">
+                        <div class="profile-avatar-lg">
+                            <div class="profile-avatar-text" id="avatar-lg-text">GU</div>
+                            <img src="" alt="Profile" id="avatar-lg-img" style="display: none;">
+                        </div>
+                        <div class="profile-info">
+                            <div class="username" id="username-display">Guest User</div>
+                            <div class="user-email" id="user-email">guest@example.com</div>
+                        </div>
+                    </div>
+                    
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item" id="profile-item">
+                            <i class="fas fa-user"></i> My Profile
+                        </li>
+                        <li class="dropdown-item" id="settings-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </li>
+                        <li class="dropdown-item" id="login-item">
+                            <i class="fas fa-sign-in-alt"></i> Log In / Sign Up
+                        </li>
+                        <li class="dropdown-item logout-btn" id="logout-item" style="display: none;">
+                            <i class="fas fa-sign-out-alt"></i> Log Out
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Back Button -->
+    <button class="back-button" id="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </button>
+    
+    <!-- Homepage Content -->
+    <div class="homepage" id="homepage">
+        <h1>Prompt Inspiration</h1>
+        
+        <!-- Top Leaderboard Ad -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-leaderboard">
+                Google AdSense Leaderboard (728x90)
+            </div>
+        </div>
+        
+        <div class="prompts-grid" id="prompts-grid">
+            <!-- Prompt cards will be generated by JavaScript -->
+        </div>
+        
+        <!-- Middle Rectangle Ad -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-large-rectangle">
+                Google AdSense Large Rectangle (336x280)
+            </div>
+        </div>
+    </div>
+    
+    <!-- About Us Page -->
+    <div class="about-page" id="about-page">
+        <h1>About Prompt Inspiration</h1>
+        
+        <!-- About Page Ad -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-medium-rectangle">
+                Google AdSense Medium Rectangle (300x250)
+            </div>
+        </div>
+        
+        <p>Welcome to Prompt Inspiration, your go-to platform for creative writing prompts designed to spark imagination and overcome writer's block.</p>
+        
+        <h2>Our Mission</h2>
+        <p>We believe everyone has a story to tell. Our mission is to provide high-quality writing prompts paired with inspiring visuals to help writers of all levels turn blank pages into compelling stories.</p>
+        
+        <h2>What We Offer</h2>
+        <p>• Diverse prompts across multiple genres<br>
+           • Visual inspiration for each prompt<br>
+           • Easy-to-use tools to copy and save ideas<br>
+           • A growing library of creative starters</p>
+        
+        <h2>Our Team</h2>
+        <div class="team-members">
+            <div class="team-member">
+                <img src="https://source.unsplash.com/random/300x300/?portrait,writer" alt="Team Member">
+                <h3>Alex Johnson</h3>
+                <p>Founder & Head Writer</p>
+            </div>
+            <div class="team-member">
+                <img src="https://source.unsplash.com/random/300x300/?portrait,designer" alt="Team Member">
+                <h3>Sam Taylor</h3>
+                <p>Creative Director</p>
+            </div>
+            <div class="team-member">
+                <img src="https://source.unsplash.com/random/300x300/?portrait,developer" alt="Team Member">
+                <h3>Jordan Lee</h3>
+                <p>Lead Developer</p>
+            </div>
+        </div>
+        
+        <h2>Contact Us</h2>
+        <p>Have questions or suggestions? We'd love to hear from you!</p>
+        <p>Email: <a href="mailto:hello@promptinspiration.com">hello@promptinspiration.com</a></p>
+    </div>
+    
+    <!-- Starred Prompts Page -->
+    <div class="homepage" id="starred-page" style="display: none;">
+        <h1>Starred Prompts</h1>
+        
+        <!-- Starred Page Ad -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-banner">
+                Google AdSense Banner (468x60)
+            </div>
+        </div>
+        
+        <div class="prompts-grid" id="starred-grid">
+            <!-- Starred prompts will be generated by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Category Prompts Page -->
+    <div class="homepage" id="category-page" style="display: none;">
+        <h1 id="category-title">Category Prompts</h1>
+        
+        <!-- Category Page Ad -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-mobile-banner">
+                Google AdSense Mobile Banner (320x50)
+            </div>
+        </div>
+        
+        <div class="prompts-grid" id="category-grid">
+            <!-- Category prompts will be generated by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Help & Feedback Modal -->
+    <div class="help-modal" id="help-modal">
+        <div class="help-container">
+            <span class="close-help" id="close-help">&times;</span>
+            <h2>Help & Feedback</h2>
+            <p>Have questions or suggestions? We'd love to hear from you!</p>
+            
+            <div class="help-form">
+                <div class="form-group">
+                    <label for="help-email">Your Email</label>
+                    <input type="email" id="help-email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="help-message">Message</label>
+                    <textarea id="help-message" placeholder="How can we help you?"></textarea>
+                </div>
+                <button class="submit-help" id="submit-help">Send Message</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Image Gallery Modal -->
+    <div class="gallery-modal" id="gallery-modal">
+        <div class="gallery-container">
+            <i class="fas fa-times close-gallery" id="close-gallery"></i>
+            <button class="gallery-nav gallery-prev" id="gallery-prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="gallery-nav gallery-next" id="gallery-next"><i class="fas fa-chevron-right"></i></button>
+            <div class="gallery-slider" id="gallery-slider">
+                <!-- Gallery slides will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Login/Signup Modal -->
+    <div class="auth-modal" id="auth-modal">
+        <div class="auth-container">
+            <button class="auth-back-btn" id="auth-back-btn"><i class="fas fa-arrow-left"></i></button>
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="login-tab">Login</div>
+                <div class="auth-tab" id="signup-tab">Sign Up</div>
+            </div>
+            
+            <div class="auth-form active" id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password">
+                    <div class="error-message" id="login-error">Wrong password, try again later</div>
+                </div>
+                <div class="forgot-password" id="forgot-password">Forgot Password?</div>
+                <button class="auth-btn" id="login-btn">Login</button>
+            </div>
+            
+            <div class="auth-form" id="signup-form">
+                <div class="form-group">
+                    <label for="signup-name">Name</label>
+                    <input type="text" id="signup-name" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Create a password">
+                    <div class="error-message" id="signup-error">Password must be at least 8 characters</div>
+                </div>
+                <button class="auth-btn" id="signup-btn">Sign Up</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settings-modal">
+        <div class="settings-container">
+            <span class="close-settings" id="close-settings">&times;</span>
+            <h2>Account Settings</h2>
+            
+            <div class="settings-tabs">
+                <div class="settings-tab active" id="personal-tab">Personal</div>
+                <div class="settings-tab" id="security-tab">Security</div>
+                <div class="settings-tab" id="account-tab">Account</div>
+            </div>
+            
+            <div class="settings-content active" id="personal-content">
+                <div class="form-group">
+                    <label>Profile Picture</label>
+                    <div class="avatar-upload">
+                        <div class="avatar-preview" id="settings-avatar-preview">
+                            <div class="profile-avatar-text" id="settings-avatar-text">GU</div>
+                            <img src="" alt="Profile" id="settings-avatar-img" style="display: none;">
+                        </div>
+                        <div>
+                            <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+                            <button class="upload-btn" id="upload-btn">Upload Photo</button>
+                            <p style="font-size: 12px; color: #666; margin-top: 5px;">JPG, GIF or PNG. Max size 2MB</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="settings-name">Name</label>
+                    <input type="text" id="settings-name" placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="settings-bio">Bio</label>
+                    <textarea id="settings-bio" placeholder="Tell us about yourself"></textarea>
+                </div>
+                
+                <button class="auth-btn" id="save-personal-btn">Save Changes</button>
+            </div>
+            
+            <div class="settings-content" id="security-content">
+                <div class="form-group">
+                    <label for="current-password">Current Password</label>
+                    <input type="password" id="current-password" placeholder="Enter current password">
+                </div>
+                
+                <div class="form-group">
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" placeholder="Enter new password">
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm-password">Confirm New Password</label>
+                    <input type="password" id="confirm-password" placeholder="Confirm new password">
+                </div>
+                
+                <div class="form-group">
+                    <label class="toggle-label">
+                        Two-Factor Authentication
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="two-factor-toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </label>
+                    <p style="font-size: 12px; color: #666; margin-top: 5px;">Add an extra layer of security to your account</p>
+                </div>
+                
+                <button class="auth-btn" id="save-security-btn">Update Security</button>
+            </div>
+            
+            <div class="settings-content" id="account-content">
+                <div class="form-group">
+                    <label for="delete-email">Email</label>
+                    <input type="email" id="delete-email" placeholder="Enter your email to confirm">
+                </div>
+                
+                <div class="form-group">
+                    <label for="delete-password">Password</label>
+                    <input type="password" id="delete-password" placeholder="Enter your password to confirm">
+                </div>
+                
+                <div class="delete-account">
+                    <p style="color: #666; margin-bottom: 10px;">Deleting your account will permanently remove all your data. This action cannot be undone.</p>
+                    <button class="delete-btn" id="delete-account-btn">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Sample prompt data with images and view counts
+        const promptsData = [
+            {
+                id: 1,
+                text: "Create a hyper-realistic 3D render of a futuristic capsule-shaped office set on a beach during golden hour. The capsule should be transparent on one side, showing a cozy interior styled around the brand [insert brand name here]. Include elements that match the brand's aesthetic (coffee shop vibe). Add branded items, signage/logo, and furniture that reflects the brand theme. The capsule's exterior should be matte white with the brand's logo printed boldly. Place the capsule on reflective wet sand with soft ocean waves behind. Use golden sunlight, cinematic lighting, and a premium, minimalist style. Ultra-HD, 4K+ quality.",
+                image: "https://i.ibb.co/vxT92Nrz/file-000000006e6c61f7851105943d3324ac.png",
+                gallery: [
+                    "https://i.ibb.co/vxT92Nrz/file-000000006e6c61f7851105943d3324ac.png",
+                    "https://i.ibb.co/PZC7V3tc/file-00000000402861fd9b9a2c8e8b832f6f.png",
+                    
+                ],
+                category: "Advertisement",
+                views: 1245,
+                starred: false
+            },
+            {
+                id: 2,
+                text: "Create a photorealistic scene of a miniature office encapsulated inside a transparent pill capsule, placed on a sandy beach. The capsule should have the name of the company [name of the brand] {you can attach your brand logo for better understanding} printed on it in clean, bold font. Inside the capsule, include detailed, miniature versions of [elements of the brand]. The capsule should be illuminated with soft, cinematic lighting that enhances the brand details. The background should feature a serene beach with soft waves, and the reflection of the capsule on the wet sand should be clearly visible, creating a dreamlike, imaginative atmosphere.",
+                image: "https://i.ibb.co/4ncLGCvw/Screenshot-2025-07-03-08-08-59-821-com-instagram-lite.png",
+                gallery: [
+                    "https://i.ibb.co/4ncLGCvw/Screenshot-2025-07-03-08-08-59-821-com-instagram-lite.png",
+                    "https://i.ibb.co/dsDBBsxS/Screenshot-2025-07-03-08-09-30-611-com-instagram-lite.png",
+                    "https://i.ibb.co/Mk6Ds3mN/Screenshot-2025-07-03-08-09-41-934-com-instagram-lite.png",
+                ],
+                category: "Advertisement",
+                views: 876,
+                starred: true
+            },
+            {
+                id: 3,
+                text: "Create a stylish poster [x:y] aspect ratio featuring a miniature 3D model of {City Name}, showcasing its key landmarks, bursting through a torn, horizontally laid-out physical world map, seamlessly integrated into the design. A white sleek 3D rendering of the city's name {City Name}, blends organically into the urban landscape. Use a dynamic camera angle and dramatic perspective for depth, with natural yet vibrant colors. Employ studio lighting for sharp, high-detail contrast, set against a clean white background. The image should resemble a professional DSLR photograph-crisp, high-resolution, and visually striking, merging realism with artistic flair.",
+                image: "https://i.ibb.co/ZzbLZW6R/IMG-20250703-084703.png",
+                gallery: [
+                    "https://i.ibb.co/ZzbLZW6R/IMG-20250703-084703.png",
+                    "https://i.ibb.co/M5Zkpcdm/IMG-20250703-084729.png",
+                    "https://i.ibb.co/1B43wWd/IMG-20250703-084745.png",
+                    "https://i.ibb.co/7NdZDYXY/IMG-20250703-084800.png"
+                ],
+                category: "Happy",
+                views: 543,
+                starred: false
+            },
+            {
+                id: 4,
+                text: "Create hyper-realistic photo of a glass tumbler in a wild forest. Inside, a miniature [City] with landmarks. A sleek white 3D text of '[City]' blends naturally into the landscape. Soft bright daylight, reflections, and subtle imperfections like fingerprints. DSLR quality, sharp focus.",
+                image: "https://i.ibb.co/0jctsGZ7/IMG-20250703-093137.png",
+                gallery: [
+                    "https://i.ibb.co/0jctsGZ7/IMG-20250703-093137.png",
+                    "https://i.ibb.co/PsyYWM5f/IMG-20250703-093210.png",
+                    "https://i.ibb.co/S7WK0q57/IMG-20250703-093151.png",
+                    "https://i.ibb.co/RT2N9nqN/IMG-20250703-093159.png",
+                    "https://i.ibb.co/1GqgwD5n/IMG-20250703-093247.png"
+                ],
+                category: "Sad",
+                views: 321,
+                starred: false
+            },
+            {
+                id: 5,
+                text: "A photorealistic 3D Glowing Uniqlo logo(attached) encased in rippling crystal-clear ice cube, lit from below by soft LED glow. Perfectly detailed pulp texture and water droplets on the surface, with subtle refractions casting dancing light patterns onto a matte black tabletop. Ultra-detailed, think 8K resolution for realistic clarity and luminous depth, suitable for commercial sale.Vertical aspect ratio 3:5",
+                image: "https://i.ibb.co/Mxy9C4Yq/IMG-20250703-092206.png",
+                gallery: [
+                    "https://i.ibb.co/Mxy9C4Yq/IMG-20250703-092206.png",
+                    "https://i.ibb.co/gZTwYpYz/IMG-20250703-092145.png",
+                    "https://i.ibb.co/MDCXLnWZ/IMG-20250703-092134.png",
+                    "https://i.ibb.co/DJzYkcz/IMG-20250703-092120.png",
+
+                ],
+                category: "Nature",
+                views: 765,
+                starred: true
+            },
+            {
+                id: 6,
+                text: "Craft a mystery about a librarian who discovers that certain books in the collection can predict future events, but only when read under specific conditions.",
+                image: "https://source.unsplash.com/random/600x400/?library,mystery",
+                gallery: [
+                    "https://source.unsplash.com/random/800x600/?library",
+                    "https://source.unsplash.com/random/800x600/?mystery,books",
+                    "https://source.unsplash.com/random/800x600/?ancient,texts",
+                    "https://source.unsplash.com/random/800x600/?prediction",
+                    "https://source.unsplash.com/random/800x600/?magic,books"
+                ],
+                category: "Mystery",
+                views: 432,
+                starred: false
+            }
+        ];
+
+        // DOM Elements
+        const promptsGrid = document.getElementById('prompts-grid');
+        const starredGrid = document.getElementById('starred-grid');
+        const categoryGrid = document.getElementById('category-grid');
+        const categoryTitle = document.getElementById('category-title');
+        const homepage = document.getElementById('homepage');
+        const starredPage = document.getElementById('starred-page');
+        const categoryPage = document.getElementById('category-page');
+        const aboutPage = document.getElementById('about-page');
+        const backButton = document.getElementById('back-button');
+        const galleryModal = document.getElementById('gallery-modal');
+        const gallerySlider = document.getElementById('gallery-slider');
+        const closeGallery = document.getElementById('close-gallery');
+        const galleryPrev = document.getElementById('gallery-prev');
+        const galleryNext = document.getElementById('gallery-next');
+        const searchInput = document.querySelector('.search-input');
+        const searchBtn = document.querySelector('.search-btn');
+        const searchSuggestions = document.querySelector('.search-suggestions');
+        const menuIcon = document.getElementById('menu-icon');
+        const menuDropdown = document.getElementById('menu-dropdown');
+        const profileAvatar = document.getElementById('profile-avatar');
+        const avatarText = document.getElementById('avatar-text');
+        const avatarImg = document.getElementById('avatar-img');
+        const avatarLgText = document.getElementById('avatar-lg-text');
+        const avatarLgImg = document.getElementById('avatar-lg-img');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        const usernameDisplay = document.getElementById('username-display');
+        const userEmail = document.getElementById('user-email');
+        const profileItem = document.getElementById('profile-item');
+        const settingsItem = document.getElementById('settings-item');
+        const loginItem = document.getElementById('login-item');
+        const logoutItem = document.getElementById('logout-item');
+        const featureItem = document.getElementById('feature-item');
+        const featureSubmenu = document.getElementById('feature-submenu');
+        const starredItem = document.getElementById('starred-item');
+        const homeItem = document.getElementById('home-item');
+        const aboutItem = document.getElementById('about-item');
+        const helpItem = document.getElementById('help-item');
+        const helpModal = document.getElementById('help-modal');
+        const closeHelp = document.getElementById('close-help');
+        const submitHelp = document.getElementById('submit-help');
+        const authModal = document.getElementById('auth-modal');
+        const loginTab = document.getElementById('login-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const loginBtn = document.getElementById('login-btn');
+        const signupBtn = document.getElementById('signup-btn');
+        const loginError = document.getElementById('login-error');
+        const signupError = document.getElementById('signup-error');
+        const forgotPassword = document.getElementById('forgot-password');
+        const authBackBtn = document.getElementById('auth-back-btn');
+        const settingsModal = document.getElementById('settings-modal');
+        const closeSettings = document.getElementById('close-settings');
+        const personalTab = document.getElementById('personal-tab');
+        const securityTab = document.getElementById('security-tab');
+        const accountTab = document.getElementById('account-tab');
+        const personalContent = document.getElementById('personal-content');
+        const securityContent = document.getElementById('security-content');
+        const accountContent = document.getElementById('account-content');
+        const settingsAvatarPreview = document.getElementById('settings-avatar-preview');
+        const settingsAvatarText = document.getElementById('settings-avatar-text');
+        const settingsAvatarImg = document.getElementById('settings-avatar-img');
+        const avatarUpload = document.getElementById('avatar-upload');
+        const uploadBtn = document.getElementById('upload-btn');
+        const settingsName = document.getElementById('settings-name');
+        const settingsBio = document.getElementById('settings-bio');
+        const savePersonalBtn = document.getElementById('save-personal-btn');
+        const currentPassword = document.getElementById('current-password');
+        const newPassword = document.getElementById('new-password');
+        const confirmPassword = document.getElementById('confirm-password');
+        const twoFactorToggle = document.getElementById('two-factor-toggle');
+        const saveSecurityBtn = document.getElementById('save-security-btn');
+        const deleteEmail = document.getElementById('delete-email');
+        const deletePassword = document.getElementById('delete-password');
+        const deleteAccountBtn = document.getElementById('delete-account-btn');
+        
+        // Current page state
+        let currentPage = 'home';
+        let currentCategory = '';
+        let currentGalleryPromptId = null;
+        let currentSlideIndex = 0;
+        let isLoggedIn = false;
+        let currentUser = {
+            name: 'Guest User',
+            email: 'guest@example.com',
+            id: 'GUEST123',
+            bio: '',
+            avatar: '',
+            twoFactorEnabled: false
+        };
+
+        // Generate prompt cards
+        function renderPrompts(prompts, container) {
+            container.innerHTML = prompts.map(prompt => `
+                <div class="prompt-card" data-id="${prompt.id}">
+                    <div class="prompt-content">
+                        <div class="prompt-text-container">
+                            <p class="prompt-text">"${prompt.text}"</p>
+                        </div>
+                        <div class="prompt-image-container">
+                            <img src="${prompt.image}" alt="Prompt Image" class="prompt-image" data-gallery="${prompt.id}">
+                        </div>
+                    </div>
+                    <div class="prompt-meta">
+                        <span class="view-count">
+                            <i class="fas fa-eye"></i> ${prompt.views.toLocaleString()} views
+                        </span>
+                        <span>${prompt.category}</span>
+                    </div>
+                    <div class="prompt-actions">
+                        <button class="action-btn copy-btn" data-text="${escapeHtml(prompt.text)}">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                        <button class="action-btn star-btn ${prompt.starred ? 'starred' : ''}" data-id="${prompt.id}">
+                            <i class="${prompt.starred ? 'fas' : 'far'} fa-star"></i> ${prompt.starred ? 'Starred' : 'Star'}
+                        </button>
+                        <button class="action-btn more-images-btn" data-gallery="${prompt.id}">
+                            <i class="fas fa-images"></i> More
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add event listeners to new elements
+            addPromptEventListeners(container);
+        }
+        
+        // Helper function to escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML.replace(/"/g, '&quot;');
+        }
+        
+        // Update profile display
+        function updateProfileDisplay() {
+            // Update avatar text with initials
+            const initials = currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            avatarText.textContent = initials;
+            avatarLgText.textContent = initials;
+            settingsAvatarText.textContent = initials;
+            
+            // Update avatar image if available
+            if (currentUser.avatar) {
+                avatarImg.src = currentUser.avatar;
+                avatarImg.style.display = 'block';
+                avatarText.style.display = 'none';
+                
+                avatarLgImg.src = currentUser.avatar;
+                avatarLgImg.style.display = 'block';
+                avatarLgText.style.display = 'none';
+                
+                settingsAvatarImg.src = currentUser.avatar;
+                settingsAvatarImg.style.display = 'block';
+                settingsAvatarText.style.display = 'none';
+            } else {
+                avatarImg.style.display = 'none';
+                avatarText.style.display = 'block';
+                
+                avatarLgImg.style.display = 'none';
+                avatarLgText.style.display = 'block';
+                
+                settingsAvatarImg.style.display = 'none';
+                settingsAvatarText.style.display = 'block';
+            }
+            
+            // Update username and email
+            usernameDisplay.textContent = currentUser.name;
+            userEmail.textContent = currentUser.email;
+            settingsName.value = currentUser.name;
+            settingsBio.value = currentUser.bio;
+            
+            // Update login/logout state
+            if (isLoggedIn) {
+                loginItem.style.display = 'none';
+                logoutItem.style.display = 'block';
+            } else {
+                loginItem.style.display = 'block';
+                logoutItem.style.display = 'none';
+            }
+        }
+        
+        // Add event listeners to prompt cards
+        function addPromptEventListeners(container) {
+            // Image click to open gallery
+            container.querySelectorAll('.prompt-image').forEach(img => {
+                img.addEventListener('click', function() {
+                    const promptId = parseInt(this.getAttribute('data-gallery'));
+                    const prompt = promptsData.find(p => p.id === promptId);
+                    currentGalleryPromptId = promptId;
+                    currentSlideIndex = 0; // Always start with first image
+                    
+                    // Increment view count
+                    prompt.views++;
+                    
+                    // Create gallery slides
+                    gallerySlider.innerHTML = prompt.gallery.map((imgUrl, index) => `
+                        <div class="gallery-slide">
+                            <img src="${imgUrl}" alt="Gallery Image ${index + 1}" class="gallery-img">
+                        </div>
+                    `).join('');
+                    
+                    galleryModal.classList.add('show');
+                    scrollToSlide(currentSlideIndex);
+                });
+            });
+            
+            // More images button
+            container.querySelectorAll('.more-images-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const promptId = parseInt(this.getAttribute('data-gallery'));
+                    const prompt = promptsData.find(p => p.id === promptId);
+                    currentGalleryPromptId = promptId;
+                    currentSlideIndex = 0; // Always start with first image
+                    
+                    // Increment view count
+                    prompt.views++;
+                    
+                    // Create gallery slides
+                    gallerySlider.innerHTML = prompt.gallery.map((imgUrl, index) => `
+                        <div class="gallery-slide">
+                            <img src="${imgUrl}" alt="Gallery Image ${index + 1}" class="gallery-img">
+                        </div>
+                    `).join('');
+                    
+                    galleryModal.classList.add('show');
+                    scrollToSlide(currentSlideIndex);
+                });
+            });
+            
+            // Copy button functionality
+            container.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const text = this.getAttribute('data-text');
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try {
+                        const successful = document.execCommand('copy');
+                        if (successful) {
+                            const originalText = this.innerHTML;
+                            this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                            setTimeout(() => {
+                                this.innerHTML = originalText;
+                            }, 2000);
+                        }
+                    } catch (err) {
+                        console.error('Failed to copy text: ', err);
+                    }
+                    document.body.removeChild(textarea);
+                });
+            });
+            
+            // Star button functionality
+            container.querySelectorAll('.star-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const promptId = parseInt(this.getAttribute('data-id'));
+                    const prompt = promptsData.find(p => p.id === promptId);
+                    prompt.starred = !prompt.starred;
+                    
+                    if (prompt.starred) {
+                        this.innerHTML = '<i class="fas fa-star"></i> Starred';
+                        this.classList.add('starred');
+                    } else {
+                        this.innerHTML = '<i class="far fa-star"></i> Star';
+                        this.classList.remove('starred');
+                    }
+                    
+                    // Update starred page if visible
+                    if (currentPage === 'starred') {
+                        showStarredPrompts();
+                    }
+                });
+            });
+        }
+        
+        // Scroll to specific slide in gallery
+        function scrollToSlide(index) {
+            const slides = document.querySelectorAll('.gallery-slide');
+            if (slides.length > 0) {
+                slides[index].scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
+            }
+        }
+        
+        // Show all prompts on homepage
+        function showAllPrompts() {
+            currentPage = 'home';
+            homepage.style.display = 'block';
+            starredPage.style.display = 'none';
+            categoryPage.style.display = 'none';
+            aboutPage.style.display = 'none';
+            backButton.classList.remove('show');
+            renderPrompts(promptsData, promptsGrid);
+        }
+        
+        // Show only starred prompts
+        function showStarredPrompts() {
+            currentPage = 'starred';
+            homepage.style.display = 'none';
+            starredPage.style.display = 'block';
+            categoryPage.style.display = 'none';
+            aboutPage.style.display = 'none';
+            backButton.classList.add('show');
+            const starredPrompts = promptsData.filter(prompt => prompt.starred);
+            renderPrompts(starredPrompts, starredGrid);
+        }
+        
+        // Show prompts by category
+        function showCategoryPrompts(category) {
+            currentPage = 'category';
+            currentCategory = category;
+            homepage.style.display = 'none';
+            starredPage.style.display = 'none';
+            categoryPage.style.display = 'block';
+            aboutPage.style.display = 'none';
+            backButton.classList.add('show');
+            categoryTitle.textContent = `${category} Prompts`;
+            const categoryPrompts = promptsData.filter(prompt => prompt.category === category);
+            renderPrompts(categoryPrompts, categoryGrid);
+        }
+        
+        // Show about us page
+        function showAboutPage() {
+            currentPage = 'about';
+            homepage.style.display = 'none';
+            starredPage.style.display = 'none';
+            categoryPage.style.display = 'none';
+            aboutPage.style.display = 'block';
+            backButton.classList.add('show');
+        }
+        
+        // Back button functionality
+        backButton.addEventListener('click', () => {
+            if (currentPage === 'starred' || currentPage === 'category' || currentPage === 'about') {
+                showAllPrompts();
+            }
+        });
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render initial prompts and profile
+            showAllPrompts();
+            updateProfileDisplay();
+            
+            // Close gallery when clicking X
+            closeGallery.addEventListener('click', () => {
+                galleryModal.classList.remove('show');
+            });
+            
+            // Gallery navigation
+            galleryPrev.addEventListener('click', () => {
+                const prompt = promptsData.find(p => p.id === currentGalleryPromptId);
+                if (prompt) {
+                    currentSlideIndex = (currentSlideIndex - 1 + prompt.gallery.length) % prompt.gallery.length;
+                    scrollToSlide(currentSlideIndex);
+                }
+            });
+            
+            galleryNext.addEventListener('click', () => {
+                const prompt = promptsData.find(p => p.id === currentGalleryPromptId);
+                if (prompt) {
+                    currentSlideIndex = (currentSlideIndex + 1) % prompt.gallery.length;
+                    scrollToSlide(currentSlideIndex);
+                }
+            });
+            
+            // Close gallery when clicking outside
+            galleryModal.addEventListener('click', (e) => {
+                if (e.target === galleryModal) {
+                    galleryModal.classList.remove('show');
+                }
+            });
+            
+            // Menu item click handlers
+            starredItem.addEventListener('click', showStarredPrompts);
+            
+            // Feature submenu items
+            document.querySelectorAll('#feature-submenu .menu-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    showCategoryPrompts(this.textContent);
+                });
+            });
+            
+            // Home menu item
+            homeItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                showAllPrompts();
+                menuDropdown.classList.remove('show');
+            });
+            
+            // About Us menu item
+            aboutItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                showAboutPage();
+                menuDropdown.classList.remove('show');
+            });
+            
+            // Help & Feedback menu item
+            helpItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                helpModal.style.display = 'flex';
+                menuDropdown.classList.remove('show');
+            });
+            
+            // Close help modal
+            closeHelp.addEventListener('click', () => {
+                helpModal.style.display = 'none';
+            });
+            
+            // Submit help form
+            submitHelp.addEventListener('click', () => {
+                const email = document.getElementById('help-email').value;
+                const message = document.getElementById('help-message').value;
+                
+                if (email && message) {
+                    alert('Thank you for your feedback! We\'ll get back to you soon.');
+                    helpModal.style.display = 'none';
+                    document.getElementById('help-email').value = '';
+                    document.getElementById('help-message').value = '';
+                } else {
+                    alert('Please fill in all fields.');
+                }
+            });
+            
+            // Close help modal when clicking outside
+            helpModal.addEventListener('click', (e) => {
+                if (e.target === helpModal) {
+                    helpModal.style.display = 'none';
+                }
+            });
+            
+            // Toggle menu dropdown
+            menuIcon.addEventListener('click', () => {
+                menuDropdown.classList.toggle('show');
+                profileDropdown.classList.remove('show');
+            });
+            
+            // Toggle profile dropdown
+            profileAvatar.addEventListener('click', () => {
+                profileDropdown.classList.toggle('show');
+                menuDropdown.classList.remove('show');
+            });
+            
+            // Profile item click
+            profileItem.addEventListener('click', () => {
+                profileDropdown.classList.remove('show');
+                alert('Profile page would show here in a full implementation.');
+            });
+            
+            // Settings item click
+            settingsItem.addEventListener('click', () => {
+                profileDropdown.classList.remove('show');
+                settingsModal.classList.add('show');
+            });
+            
+            // Login item click
+            loginItem.addEventListener('click', () => {
+                profileDropdown.classList.remove('show');
+                authModal.classList.add('show');
+            });
+            
+            // Logout functionality
+            logoutItem.addEventListener('click', () => {
+                isLoggedIn = false;
+                currentUser = {
+                    name: 'Guest User',
+                    email: 'guest@example.com',
+                    id: 'GUEST123',
+                    bio: '',
+                    avatar: '',
+                    twoFactorEnabled: false
+                };
+                updateProfileDisplay();
+                profileDropdown.classList.remove('show');
+                alert('You have been logged out.');
+            });
+            
+            // Toggle feature submenu
+            featureItem.addEventListener('click', () => {
+                featureSubmenu.classList.toggle('show');
+            });
+            
+            // Search functionality
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                if (searchTerm.length > 0) {
+                    // Filter prompts by search term
+                    const matchedPrompts = promptsData
+                        .filter(prompt => 
+                            prompt.text.toLowerCase().includes(searchTerm) || 
+                            prompt.category.toLowerCase().includes(searchTerm)
+                        )
+                        .sort((a, b) => {
+                            // Sort by relevance (more matching characters first)
+                            const aTextMatch = a.text.toLowerCase().indexOf(searchTerm);
+                            const bTextMatch = b.text.toLowerCase().indexOf(searchTerm);
+                            const aCategoryMatch = a.category.toLowerCase().indexOf(searchTerm);
+                            const bCategoryMatch = b.category.toLowerCase().indexOf(searchTerm);
+                            
+                            // Prefer text matches over category matches
+                            if (aTextMatch !== -1 && bTextMatch === -1) return -1;
+                            if (aTextMatch === -1 && bTextMatch !== -1) return 1;
+                            
+                            // If both have text matches, sort by position
+                            if (aTextMatch !== -1 && bTextMatch !== -1) {
+                                return aTextMatch - bTextMatch;
+                            }
+                            
+                            // Otherwise sort by category match position
+                            return aCategoryMatch - bCategoryMatch;
+                        });
+                    
+                    // Display suggestions
+                    if (matchedPrompts.length > 0) {
+                        searchSuggestions.innerHTML = matchedPrompts
+                            .map(prompt => `
+                                <div class="suggestion-item" data-id="${prompt.id}">
+                                    <strong>${prompt.category}</strong>: ${prompt.text.substring(0, 60)}...
+                                </div>
+                            `)
+                            .join('');
+                        searchSuggestions.classList.add('show');
+                    } else {
+                        searchSuggestions.classList.remove('show');
+                    }
+                } else {
+                    searchSuggestions.classList.remove('show');
+                }
+            });
+            
+            // Click on suggestion
+            searchSuggestions.addEventListener('click', (e) => {
+                if (e.target.classList.contains('suggestion-item')) {
+                    const promptId = parseInt(e.target.getAttribute('data-id'));
+                    const prompt = promptsData.find(p => p.id === promptId);
+                    
+                    // Highlight the matching prompt
+                    showAllPrompts();
+                    const promptCard = document.querySelector(`.prompt-card[data-id="${promptId}"]`);
+                    if (promptCard) {
+                        promptCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        promptCard.style.boxShadow = '0 0 0 3px rgba(52, 152, 219, 0.5)';
+                        setTimeout(() => {
+                            promptCard.style.boxShadow = '';
+                        }, 2000);
+                    }
+                    
+                    searchInput.value = '';
+                    searchSuggestions.classList.remove('show');
+                }
+            });
+            
+            // Search button click
+            searchBtn.addEventListener('click', () => {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm !== '') {
+                    const matchedPrompts = promptsData.filter(prompt => 
+                        prompt.text.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                        prompt.category.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                    
+                    if (matchedPrompts.length > 0) {
+                        // Show search results
+                        currentPage = 'home';
+                        homepage.style.display = 'block';
+                        starredPage.style.display = 'none';
+                        categoryPage.style.display = 'none';
+                        aboutPage.style.display = 'none';
+                        backButton.classList.remove('show');
+                        renderPrompts(matchedPrompts, promptsGrid);
+                    } else {
+                        alert('No prompts found matching your search.');
+                    }
+                }
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.hamburger-menu') && !e.target.closest('.profile-icon')) {
+                    menuDropdown.classList.remove('show');
+                    profileDropdown.classList.remove('show');
+                }
+                
+                if (!e.target.closest('.search-container')) {
+                    searchSuggestions.classList.remove('show');
+                }
+            });
+            
+            // Auth modal tabs
+            loginTab.addEventListener('click', () => {
+                loginTab.classList.add('active');
+                signupTab.classList.remove('active');
+                loginForm.classList.add('active');
+                signupForm.classList.remove('active');
+            });
+            
+            signupTab.addEventListener('click', () => {
+                signupTab.classList.add('active');
+                loginTab.classList.remove('active');
+                signupForm.classList.add('active');
+                loginForm.classList.remove('active');
+            });
+            
+            // Auth back button
+            authBackBtn.addEventListener('click', () => {
+                authModal.classList.remove('show');
+            });
+            
+            // Login/Signup functionality
+            loginBtn.addEventListener('click', () => {
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                if (password === 'wrongpassword') {
+                    loginError.style.display = 'block';
+                } else if (email && password) {
+                    isLoggedIn = true;
+                    currentUser = {
+                        name: email.split('@')[0],
+                        email: email,
+                        id: 'USER' + Math.floor(Math.random() * 10000),
+                        bio: '',
+                        avatar: '',
+                        twoFactorEnabled: false
+                    };
+                    updateProfileDisplay();
+                    authModal.classList.remove('show');
+                    alert('Login successful!');
+                }
+            });
+            
+            signupBtn.addEventListener('click', () => {
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                
+                if (password.length < 8) {
+                    signupError.style.display = 'block';
+                } else if (name && email && password) {
+                    isLoggedIn = true;
+                    currentUser = {
+                        name: name,
+                        email: email,
+                        id: 'USER' + Math.floor(Math.random() * 10000),
+                        bio: '',
+                        avatar: '',
+                        twoFactorEnabled: false
+                    };
+                    updateProfileDisplay();
+                    authModal.classList.remove('show');
+                    alert('Account created successfully!');
+                }
+            });
+            
+            forgotPassword.addEventListener('click', () => {
+                alert('Password reset link sent to your email!');
+            });
+            
+            // Settings modal tabs
+            personalTab.addEventListener('click', () => {
+                personalTab.classList.add('active');
+                securityTab.classList.remove('active');
+                accountTab.classList.remove('active');
+                personalContent.classList.add('active');
+                securityContent.classList.remove('active');
+                accountContent.classList.remove('active');
+            });
+            
+            securityTab.addEventListener('click', () => {
+                securityTab.classList.add('active');
+                personalTab.classList.remove('active');
+                accountTab.classList.remove('active');
+                securityContent.classList.add('active');
+                personalContent.classList.remove('active');
+                accountContent.classList.remove('active');
+            });
+            
+            accountTab.addEventListener('click', () => {
+                accountTab.classList.add('active');
+                personalTab.classList.remove('active');
+                securityTab.classList.remove('active');
+                accountContent.classList.add('active');
+                personalContent.classList.remove('active');
+                securityContent.classList.remove('active');
+            });
+            
+            // Close settings modal
+            closeSettings.addEventListener('click', () => {
+                settingsModal.classList.remove('show');
+            });
+            
+            // Close settings when clicking outside
+            settingsModal.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    settingsModal.classList.remove('show');
+                }
+            });
+            
+            // Avatar upload
+            uploadBtn.addEventListener('click', () => {
+                avatarUpload.click();
+            });
+            
+            avatarUpload.addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    
+                    // Check file size (max 2MB)
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('File size must be less than 2MB');
+                        return;
+                    }
+                    
+                    // Check file type
+                    if (!file.type.match('image.*')) {
+                        alert('Please select an image file (JPG, PNG, GIF)');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        // Update all avatar images
+                        avatarImg.src = e.target.result;
+                        avatarImg.style.display = 'block';
+                        avatarText.style.display = 'none';
+                        
+                        avatarLgImg.src = e.target.result;
+                        avatarLgImg.style.display = 'block';
+                        avatarLgText.style.display = 'none';
+                        
+                        settingsAvatarImg.src = e.target.result;
+                        settingsAvatarImg.style.display = 'block';
+                        settingsAvatarText.style.display = 'none';
+                        
+                        // Save to current user
+                        currentUser.avatar = e.target.result;
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Save personal info
+            savePersonalBtn.addEventListener('click', () => {
+                const newName = settingsName.value.trim();
+                const newBio = settingsBio.value.trim();
+                
+                if (newName) {
+                    currentUser.name = newName;
+                    currentUser.bio = newBio;
+                    updateProfileDisplay();
+                    alert('Personal information saved successfully!');
+                } else {
+                    alert('Please enter your name');
+                }
+            });
+            
+            // Save security settings
+            saveSecurityBtn.addEventListener('click', () => {
+                const currentPass = currentPassword.value;
+                const newPass = newPassword.value;
+                const confirmPass = confirmPassword.value;
+                
+                if (currentPass && newPass && confirmPass) {
+                    if (newPass === confirmPass) {
+                        if (newPass.length >= 8) {
+                            currentUser.twoFactorEnabled = twoFactorToggle.checked;
+                            alert('Security settings updated successfully!');
+                            currentPassword.value = '';
+                            newPassword.value = '';
+                            confirmPassword.value = '';
+                        } else {
+                            alert('New password must be at least 8 characters');
+                        }
+                    } else {
+                        alert('New passwords do not match');
+                    }
+                } else {
+                    alert('Please fill in all fields');
+                }
+            });
+            
+            // Delete account
+            deleteAccountBtn.addEventListener('click', () => {
+                const email = deleteEmail.value;
+                const password = deletePassword.value;
+                
+                if (email === currentUser.email && password) {
+                    if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
+                        isLoggedIn = false;
+                        currentUser = {
+                            name: 'Guest User',
+                            email: 'guest@example.com',
+                            id: 'GUEST123',
+                            bio: '',
+                            avatar: '',
+                            twoFactorEnabled: false
+                        };
+                        updateProfileDisplay();
+                        settingsModal.classList.remove('show');
+                        alert('Your account has been deleted.');
+                    }
+                } else {
+                    alert('Please enter your email and password correctly');
+                }
+            });
+            
+            // Show auth modal after 10 seconds if not logged in
+            setTimeout(() => {
+                if (!isLoggedIn) {
+                    authModal.classList.add('show');
+                }
+            }, 10000);
+        });
+    </script>
+    
+    <!-- Google AdSense Script (Replace with your actual publisher ID) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+     crossorigin="anonymous"></script>
+</body>
+</html>
